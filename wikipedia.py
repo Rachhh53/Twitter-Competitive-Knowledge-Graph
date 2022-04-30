@@ -70,5 +70,5 @@ def wiki_scrape(topic_name, verbose=True):
     return sources
 
 
-wiki_data = wiki_scrape('Nestle')
+#wiki_data = wiki_scrape('Nestle')
 
