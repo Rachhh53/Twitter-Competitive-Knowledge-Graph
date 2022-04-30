@@ -3,6 +3,9 @@
 
 ## MSDS-459 - Knowledge Engineering - Spring 2022
 
+**don't forget to install requirements** <br>
+pip install -r requirements.txt
+
 **Sources I may or may not use:** <br>
 https://towardsdatascience.com/auto-generated-knowledge-graphs-92ca99a81121 <br>
 https://hami-asmai.medium.com/relationship-extraction-from-any-web-articles-using-spacy-and-jupyter-notebook-in-6-steps-4444ee68763f <br>
