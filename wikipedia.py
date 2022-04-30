@@ -5,6 +5,29 @@ import concurrent.futures
 from tqdm import tqdm
 
 
+wiki_api = wikipediaapi.Wikipedia(language='en', extract_format=wikipediaapi.ExtractFormat.WIKI)
+
+
+# get the wikipedia link
+def wiki_link(link):
+    try:
+        page = wiki_api.page(link)
+        if page.exists():
+            return {'page': link, 'text': page.text, 'link': page.fullurl,
+                    'categories': list(page.categories.keys())}
+    except:
+        return None
+
+
+# Does our topic have a wikipedia page?
+def check_for_wiki(topic_name):
+    page_name = wiki_api.page(topic_name)
+    if not page_name.exists():
+        print('Page {} does not exist.'.format(topic_name))
+        return ""
+    return page_name
+
+
 def wiki_scrape(topic_name, verbose=True):
     def wiki_link(link):
         try:
@@ -48,5 +71,4 @@ def wiki_scrape(topic_name, verbose=True):
 
 
 wiki_data = wiki_scrape('Nestle')
-print(wiki_data)
 

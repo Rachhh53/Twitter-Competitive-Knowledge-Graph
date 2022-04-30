@@ -7,6 +7,7 @@
 https://towardsdatascience.com/auto-generated-knowledge-graphs-92ca99a81121 <br>
 https://hami-asmai.medium.com/relationship-extraction-from-any-web-articles-using-spacy-and-jupyter-notebook-in-6-steps-4444ee68763f <br>
 https://www.analyticsvidhya.com/blog/2019/10/how-to-build-knowledge-graph-text-using-spacy/ <br>
+https://github.com/martin-majlis/Wikipedia-API/ <br>
 
 **For eventual NLP not yet included in this repo:** <br>
 Before you install spaCy: <br>
