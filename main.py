@@ -52,18 +52,18 @@ import wikiInfobox as infobox
 
 
 def get_company_info(url):
-    # set these in cases wiki not found
-    founded = ""
-    num_emp = ""
-
     # ask user to tell us who that url is for
     co_name = input(f'Please enter a name for {url}: ')
 
     # check for wiki
     page_name = wiki.check_for_wiki(co_name)
-    if not page_name.exists():
-        print('Page {} does not have a wiki.'.format(co_name))
+    if not page_name:
+        # set these in cases wiki not found
+        founded = ""
+        num_emp = ""
+        name = co_name
     else:
+        name = page_name.title
         # if wiki exists get some info about the company
         # TODO: CLEAN THESE BABIES UP
         # print("fullurl: ", page_name.fullurl)
@@ -73,7 +73,7 @@ def get_company_info(url):
 
     company_json = {
         "type": "company",
-        "name": page_name.title,
+        "name": name,
         "url": url,
         "attributes": {
             "founded": founded,
@@ -84,6 +84,7 @@ def get_company_info(url):
 
 
 if __name__ == '__main__':
+    # create the company objects
     # TODO: add a check to see if the nodes file already includes this company so we don't loop through the whole
     #  list when we iterate
     # buyers

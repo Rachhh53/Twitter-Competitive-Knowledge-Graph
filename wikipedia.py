@@ -42,7 +42,7 @@ def wiki_scrape(topic_name, verbose=True):
                                       extract_format=wikipediaapi.ExtractFormat.WIKI)
     page_name = wiki_api.page(topic_name)
     if not page_name.exists():
-        print('Page {} does not exist.'.format(topic_name))
+        print('Page {} does not have a wiki.'.format(topic_name))
         return
 
     page_links = list(page_name.links.keys())
