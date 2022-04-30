@@ -12,7 +12,8 @@ def create_json(type, url):
                 "name": co_name,
                 "url": url,
                 "attributes": {
-                    "service": input(f'Please enter a service that {co_name} is buying from Twitter: ')
+                    "founded": "",
+                    "numberEmployees": "",
                 }
             }
             return buyer_json
