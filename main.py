@@ -1,5 +1,5 @@
 import json
-from sourceLists import buyerList
+from sourceLists import buyerList, competitorList, newEntrantList, otherUrlList, substituteList, supplierList
 import wikipedia as wiki
 import wikiInfobox as infobox
 
@@ -51,7 +51,7 @@ import wikiInfobox as infobox
 #             print("Missing from case statement in create_json()")
 
 
-def get_buyer_info(url):
+def get_company_info(url):
     # set these in cases wiki not found
     founded = ""
     num_emp = ""
@@ -71,7 +71,7 @@ def get_buyer_info(url):
         # print(founded)
         num_emp = infobox.get_emp(page_name.fullurl)
 
-    buyer_json = {
+    company_json = {
         "type": "company",
         "name": page_name.title,
         "url": url,
@@ -80,11 +80,40 @@ def get_buyer_info(url):
             "numberEmployees": num_emp,
         }
     }
-    return buyer_json
+    return company_json
 
 
 if __name__ == '__main__':
+    # TODO: add a check to see if the nodes file already includes this company so we don't loop through the whole
+    #  list when we iterate
+    # buyers
     for buyer in buyerList.buyer_list:
-        json_buyer = get_buyer_info(buyer)
+        json_buyer = get_company_info(buyer)
         with open('twitter-nodes-company.jl', 'a') as f:
             f.write(json.dumps(json_buyer) + '\n')
+    # competitors
+    for competitor in competitorList.competitor_list:
+        json_competitor = get_company_info(competitor)
+        with open('twitter-nodes-company.jl', 'a') as f:
+            f.write(json.dumps(json_competitor) + '\n')
+    # potential new entrants
+    for ne in newEntrantList.new_entrants_list:
+        json_ne = get_company_info(ne)
+        with open('twitter-nodes-company.jl', 'a') as f:
+            f.write(json.dumps(json_ne) + '\n')
+    # other companies
+    for other in otherUrlList.other_url_list:
+        json_other = get_company_info(other)
+        with open('twitter-nodes-company.jl', 'a') as f:
+            f.write(json.dumps(json_other) + '\n')
+    # substitutes
+    for sub in substituteList.substitute_list:
+        json_sub = get_company_info(sub)
+        with open('twitter-nodes-company.jl', 'a') as f:
+            f.write(json.dumps(json_sub) + '\n')
+    # suppliers
+    for supplier in supplierList.supplier_list:
+        json_supplier = get_company_info(supplier)
+        with open('twitter-nodes-company.jl', 'a') as f:
+            f.write(json.dumps(json_supplier) + '\n')
+
