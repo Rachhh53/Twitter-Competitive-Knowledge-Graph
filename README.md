@@ -13,6 +13,9 @@ https://www.analyticsvidhya.com/blog/2019/10/how-to-build-knowledge-graph-text-u
 https://github.com/martin-majlis/Wikipedia-API/ <br>
 https://gist.github.com/aculich/b34868c098d94d614515 <br>
 
+**My Schema** <br>
+![img.png](img.png)
+
 **For eventual NLP not yet included in this repo:** <br>
 Before you install spaCy: <br>
 pip install -U pip setuptools wheel <br>
