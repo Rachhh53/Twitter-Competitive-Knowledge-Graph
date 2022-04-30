@@ -70,6 +70,8 @@ def get_company_info(url):
         founded = infobox.get_founded(page_name.fullurl)
         # print(founded)
         num_emp = infobox.get_emp(page_name.fullurl)
+        industry = infobox.get_industry(page_name.fullurl)
+        make_industry(industry, name)
 
     company_json = {
         "type": "company",
@@ -80,41 +82,155 @@ def get_company_info(url):
             "numberEmployees": num_emp,
         }
     }
-    return company_json
+    return company_json, name
+
+
+# create edge object
+# class edge list example has duplicate keys...not sure that's valid json?
+def get_edge_company(co1, co2, relation):
+    edge = {
+        "company1": co1,
+        "relation": relation,
+        "company2": co2
+    }
+    return edge
+
+
+# create edge object
+def get_edge_service(co, serv, relation):
+    edge = {
+        "company": co,
+        "relation": relation,
+        "service": serv
+    }
+    return edge
+
+
+# create service object
+def get_service_info(ser):
+    service = {
+        "type": "service",
+        "name": ser,
+        "description": ""
+    }
+    return service
+
+
+# create industry object
+def make_industry(industry, name):
+    # make industry object
+    ind = {
+        "type": "industry",
+        "name": industry,
+        "attributes": {
+            "NAICScode": "",
+            "NAICStitle": "",
+            "description": ""
+        }
+    }
+    # write industry object
+    with open('twitter-nodes-other.jl', 'a') as file:
+        file.write(json.dumps(ind) + '\n')
+
+    # create edge
+    rel = {
+        "company": name,
+        "relation": "is_in",
+        "industry": industry
+    }
+    with open('twitter-edges.jl', 'a') as f:
+        f.write(json.dumps(rel) + '\n')
 
 
 if __name__ == '__main__':
+    # # Ask the user what's up
+    # while True:
+    #     try:
+    #         menu = int(input(f'Press 1 for companies, and 2 for relationships: '))
+    #     except ValueError:
+    #         print('Sorry, I didn\'t understand that. Please try again')
+    #         continue
+    #     else:
+    #         break
+
     # create the company objects
+    # if menu == 1:
+    my_co = "Twitter"
     # TODO: add a check to see if the nodes file already includes this company so we don't loop through the whole
     #  list when we iterate
     # buyers
+    # create advertising node
+    ads_json = get_service_info('advertising')
+    with open('twitter-nodes-other.jl', 'a') as f:
+        f.write(json.dumps(ads_json) + '\n')
+    # create advertising edge
+    ads_edge = get_edge_service(my_co, 'advertising', 'sells')
+    with open('twitter-edges.jl', 'a') as f:
+        f.write(json.dumps(ads_edge) + '\n')
+    print('Staring buyers')
     for buyer in buyerList.buyer_list:
-        json_buyer = get_company_info(buyer)
+        # create company obj
+        json_buyer, name = get_company_info(buyer)
         with open('twitter-nodes-company.jl', 'a') as f:
             f.write(json.dumps(json_buyer) + '\n')
+        # create service node
+        # rel = input(f'What service does {name} buy from Twitter?: ')
+        # json_service = get_service_info(rel)
+        # with open('twitter-nodes-other.jl', 'a') as f:
+        #     f.write(json.dumps(json_service) + '\n')
+        # create buyer relationship (edge)
+
+        # we don't have any other services right now
+        rel = 'advertising'
+        buyer_edge = get_edge_service(name, rel, 'buys')
+        with open('twitter-edges.jl', 'a') as f:
+            f.write(json.dumps(buyer_edge) + '\n')
     # competitors
+    print('Staring competitors')
     for competitor in competitorList.competitor_list:
-        json_competitor = get_company_info(competitor)
+        json_competitor, name = get_company_info(competitor)
         with open('twitter-nodes-company.jl', 'a') as f:
             f.write(json.dumps(json_competitor) + '\n')
+        # create edge object
+        competitor_edge = get_edge_company(my_co, name, 'competes_with')
+        with open('twitter-edges.jl', 'a') as f:
+            f.write(json.dumps(competitor_edge) + '\n')
     # potential new entrants
+    print('Staring new entrants')
     for ne in newEntrantList.new_entrants_list:
-        json_ne = get_company_info(ne)
+        json_ne, name = get_company_info(ne)
         with open('twitter-nodes-company.jl', 'a') as f:
             f.write(json.dumps(json_ne) + '\n')
-    # other companies
+        # create edge object
+        ne_edge = get_edge_company(my_co, name, 'has_potential_entrant')
+        with open('twitter-edges.jl', 'a') as f:
+            f.write(json.dumps(ne_edge) + '\n')
+    # Twitter itself
+    print('Let us not forget Twitter')
     for other in otherUrlList.other_url_list:
-        json_other = get_company_info(other)
+        json_other, name = get_company_info(other)
         with open('twitter-nodes-company.jl', 'a') as f:
             f.write(json.dumps(json_other) + '\n')
     # substitutes
+    print('Staring substitutes')
     for sub in substituteList.substitute_list:
-        json_sub = get_company_info(sub)
+        json_sub, name = get_company_info(sub)
         with open('twitter-nodes-company.jl', 'a') as f:
             f.write(json.dumps(json_sub) + '\n')
+        # create edge object
+        sub_edge = get_edge_company(my_co, name, 'has_substitute')
+        with open('twitter-edges.jl', 'a') as f:
+            f.write(json.dumps(sub_edge) + '\n')
     # suppliers
+    print('Staring suppliers')
     for supplier in supplierList.supplier_list:
-        json_supplier = get_company_info(supplier)
+        json_supplier, name = get_company_info(supplier)
         with open('twitter-nodes-company.jl', 'a') as f:
             f.write(json.dumps(json_supplier) + '\n')
 
+# elif menu == 2:
+#     print("menu 2")
+#
+# # leave this place!
+# else:
+#     print("You didn't chose a valid option. Goodbye")

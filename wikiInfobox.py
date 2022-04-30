@@ -24,6 +24,17 @@ def get_emp(page):
     except:
         return None
 
+# find industry
+def get_industry(page):
+    try:
+        # get infoboxes
+        infoboxes = read_html(page, index_col=0, attrs={"class": "infobox"})
+        infobox_df = infoboxes[0]
+        industry = infobox_df.loc["Industry"]
+        return industry.to_string()
+    except:
+        return None
+
 # page = 'https://en.wikipedia.org/wiki/Nestle'
 
 # get infoboxes

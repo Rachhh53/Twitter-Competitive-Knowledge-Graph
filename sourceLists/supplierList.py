@@ -8,5 +8,4 @@ supplier_list = [
 "https://www.worlds.com/",
 "https://www.voip-pal.com/",
 "https://www.ibm.com/us-en/",
-"https://business.twitter.com/en/advertising.html",
 ]
