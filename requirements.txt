@@ -1,5 +1,2 @@
-json
 wikipedia-api==0.5.4
 pandas
-tqdm
-spacy
