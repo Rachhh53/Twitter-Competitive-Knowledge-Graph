@@ -203,6 +203,30 @@ if __name__ == '__main__':
             with open('twitter-nodes-company.jl', 'a') as f:
                 f.write(json.dumps(json_supplier) + '\n')
 
+        # articles
+        print('Starting articles')
+        print('Wikipedia articles')
+        wiki_articles = wiki.wiki_scrape(my_co)
+        for index, row in wiki_articles.iterrows():
+            a = {
+                "type": "article",
+                "name": row['page'],
+                "url": row['link'],
+                "table": "",
+                "keywords": row['categories'],
+                "author": "Wikipedia",
+                "text": row['text']
+            }
+            edge = {
+                "company": my_co,
+                "relation": "has_article",
+                "article": row['page']
+            }
+            with open('twitter-nodes-other.jl', 'a') as f:
+                f.write(json.dumps(a) + '\n')
+            with open('twitter-edges.jl', 'a') as f:
+                f.write(json.dumps(edge) + '\n')
+
     # leave this place!
     else:
         print("Goodbye")

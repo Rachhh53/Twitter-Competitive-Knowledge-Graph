@@ -1,4 +1,5 @@
 {"company": "Twitter", "relation": "sells", "service": "advertising"}
+{"company": "Twitter", "relation": "sells", "service": "advertising"}
 {"company": "Nestl\u00e9", "relation": "is_in", "industry": "1    Food processing"}
 {"company": "Nestl\u00e9", "relation": "buys", "service": "advertising"}
 {"company": "Verizon Communications", "relation": "is_in", "industry": "1    Telecommunications Mass media"}
