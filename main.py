@@ -208,6 +208,7 @@ if __name__ == '__main__':
         print('Wikipedia articles')
         wiki_articles = wiki.wiki_scrape(my_co)
         for index, row in wiki_articles.iterrows():
+            print(row['page'])
             a = {
                 "type": "article",
                 "name": row['page'],
