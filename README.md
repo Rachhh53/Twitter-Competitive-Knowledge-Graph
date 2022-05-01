@@ -15,7 +15,7 @@ https://gist.github.com/aculich/b34868c098d94d614515 <br>
 
 **My Schema** <br>
 ![img.png](img.png) <br>
-![img_1.png](img_1.png)
+![img_2.png](img_2.png)
 
 **For eventual NLP not yet included in this repo:** <br>
 Before you install spaCy: <br>
